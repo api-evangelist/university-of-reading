@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "oai": "http://www.openarchives.org/OAI/2.0/",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "@vocab": "https://www.reading.ac.uk/ns#",
+    "University": "schema:CollegeOrUniversity",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "Repository": {
+      "@id": "schema:DataCatalog"
+    },
+    "Dataset": "schema:Dataset",
+    "ScholarlyArticle": "schema:ScholarlyArticle",
+    "repositoryName": {
+      "@id": "oai:repositoryName"
+    },
+    "baseURL": {
+      "@id": "oai:baseURL",
+      "@type": "@id"
+    },
+    "protocolVersion": {
+      "@id": "oai:protocolVersion"
+    },
+    "metadataPrefix": {
+      "@id": "oai:metadataPrefix"
+    },
+    "identifier": "dc:identifier",
+    "title": "dc:title",
+    "creator": "dc:creator",
+    "subject": "dc:subject",
+    "date": {
+      "@id": "dc:date",
+      "@type": "schema:Date"
+    },
+    "publisher": "dc:publisher",
+    "type": "dc:type",
+    "rights": "dc:rights"
+  },
+  "@type": "University",
+  "name": "University of Reading",
+  "url": "https://www.reading.ac.uk/",
+  "sameAs": [
+    "https://uk.linkedin.com/school/university-of-reading/"
+  ],
+  "description": "Public research university in Reading, England, exposing OAI-PMH metadata harvesting endpoints for its CentAUR institutional repository and Research Data Archive.",
+  "Repository": [
+    {
+      "@type": "Repository",
+      "name": "CentAUR (Central Archive University of Reading)",
+      "url": "https://centaur.reading.ac.uk/",
+      "baseURL": "https://centaur.reading.ac.uk/cgi/oai2",
+      "protocolVersion": "2.0"
+    },
+    {
+      "@type": "Repository",
+      "name": "University of Reading Research Data Archive",
+      "url": "https://researchdata.reading.ac.uk/",
+      "baseURL": "https://researchdata.reading.ac.uk/cgi/oai2",
+      "protocolVersion": "2.0"
+    }
+  ]
+}
