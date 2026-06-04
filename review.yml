@@ -1,0 +1,39 @@
+---
+name: University of Reading
+description: University of Reading public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-reading/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Verified live: two EPrints-based OAI-PMH metadata endpoints (CentAUR
+      institutional repository and the Research Data Archive), both returning HTTP
+      200, with the CentAUR Identify response confirming repositoryName "CentAUR"
+      and OAI-PMH protocol version 2.0. The official website and LinkedIn school
+      page resolve. No public self-service developer portal, REST API catalog,
+      SignUp flow, or official GitHub organization could be found (candidate GitHub
+      org names returned 404). Administrative, identity (Shibboleth/SAML), and
+      student-information interfaces appear gated behind institutional affiliation
+      and were not publicly documented. No endpoints were fabricated; only
+      confirmed URLs are listed.
+    endpoints:
+      - url: https://centaur.reading.ac.uk/cgi/oai2?verb=Identify
+        status: 200
+        note: Live OAI-PMH Identify; repositoryName "CentAUR", protocolVersion 2.0.
+      - url: https://centaur.reading.ac.uk/
+        status: 200
+        note: CentAUR institutional repository home (EPrints).
+      - url: https://researchdata.reading.ac.uk/cgi/oai2?verb=Identify
+        status: 200
+        note: Live OAI-PMH Identify for the Research Data Archive (EPrints).
+      - url: https://researchdata.reading.ac.uk/
+        status: 200
+        note: University of Reading Research Data Archive home.
+      - url: https://www.reading.ac.uk/
+        status: 200
+        note: Official university website.
+      - url: https://api.github.com/orgs/uniofreading
+        status: 404
+        note: Candidate GitHub org not found; no official org confirmed.
