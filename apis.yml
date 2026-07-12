@@ -63,6 +63,10 @@ apis:
       - type: API
         url: https://researchdata.reading.ac.uk/cgi/oai2?verb=Identify
 common:
+  - type: VulnerabilityDisclosure
+    url: security/university-of-reading-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/university-of-reading-domain-security.yml
   - type: Website
     url: https://www.reading.ac.uk/
   - type: LinkedIn
