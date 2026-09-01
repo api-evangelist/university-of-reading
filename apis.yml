@@ -1,23 +1,32 @@
 ---
 aid: university-of-reading
 name: University of Reading
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Reading is a public research university in Reading, England,
-  ranked #172 in the QS World University Rankings 2025. Its public, machine-readable
-  developer footprint is centered on open research and scholarly metadata rather than
-  a formal developer portal. The university operates two EPrints-based repositories —
-  CentAUR (the Central Archive University of Reading) and the University of Reading
-  Research Data Archive — both of which expose live OAI-PMH metadata harvesting
-  endpoints. No general-purpose, self-service developer portal, public REST API
-  catalog, or official GitHub organization could be confirmed; administrative,
-  identity, and student-information interfaces are gated behind institutional
-  affiliation and federated authentication.
+  The University of Reading is a public research university in Reading, England, founded in 1926 and
+  ranked #172 in the QS World University Rankings 2025. Its programmable footprint is small, real,
+  and almost entirely scholarly: two OAI-PMH 2.0 harvesting endpoints on its own hosts — CentAUR
+  (64,458 research outputs) and the Research Data Archive — plus the read-only EPrints dataset
+  listings beside them. Both were probed live on 2026-09-01 and both are fully open, with no key, no
+  registration and no advertised rate limit. There is no developer portal, no api.reading.ac.uk, no
+  open-data portal and no OpenAPI, AsyncAPI or apis.json document published by the university
+  anywhere. The institution does operate an Azure API Management gateway on its own domain
+  (esb-prod-api.reading.ac.uk) but publishes no route through it. Its strongest institution-operated
+  machine-readable surface after the repositories is identity: a SAML entity in the UK Access
+  Management Federation (entityID https://reading.ac.uk/oala/metadata, scoped reading.ac.uk and
+  reading.edu.my) and a Microsoft Entra ID tenant whose OpenID Connect discovery document is public.
+  It is a registered DataCite member (provider PCLW) and holds a ROR identifier. Almost everything
+  else a reader might mistake for a Reading API is a vendor's contract running under the
+  university's name — Elsevier Pure, Talis Aspire, SirsiDynix Enterprise, ProQuest Summon,
+  Springshare LibGuides — and those are recorded here as tenant relationships, not as the
+  university's engineering.
 type: Index
 deliveryModel:
   model: saas
   open_source: false
   commercial: true
-  callable_host: false
+  callable_host: true
   label: Hosted service · you call their endpoint
   confidence: medium
   source:
@@ -26,42 +35,54 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: none
   trial: false
-  try_now: false
-  public: false
-  label: Free
-  confidence: medium
+  try_now: true
+  public: true
+  label: Free · open, no registration
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+  - authentication
+  - probed
+  generated: '2026-09-01'
+  method: probed
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-reading.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-reading/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
   - Research
+  - Research Repository
+  - Research Data
   - Open Access
-  - Repository
+  - OAI-PMH
   - Metadata
+  - Identity Federation
+  - Course Catalog
+  - Library
+  - Climate Data
   - United Kingdom
+  - England
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
   - aid: university-of-reading:centaur-oai-pmh
     name: CentAUR OAI-PMH Metadata API
+    x-operator: institution
     description: >-
-      OAI-PMH 2.0 metadata harvesting interface for CentAUR, the Central Archive
-      University of Reading institutional repository (EPrints). Supports standard
-      OAI-PMH verbs (Identify, ListRecords, ListMetadataFormats, ListSets,
-      GetRecord) for harvesting bibliographic metadata of the university's research
-      outputs. Confirmed live; Identify returns repositoryName "CentAUR",
-      protocolVersion 2.0.
+      OAI-PMH 2.0 metadata harvesting interface for CentAUR, the Central Archive at the University of
+      Reading — the institutional repository of the university's research outputs. Operated by the
+      university on its own host; the software underneath is EPrints 3.4.6, which the Identify
+      response names itself. Verified live 2026-09-01 with no credentials: repositoryName "CentAUR",
+      protocolVersion 2.0, adminEmail centaur@reading.ac.uk, earliestDatestamp 2021-07-09,
+      deletedRecord persistent. ListMetadataFormats advertises seven prefixes including rioxx (the
+      UK research-outputs profile used for REF open-access reporting) and uketd_dc; ListRecords with
+      oai_dc returned 100 records per page and a resumptionToken reporting completeListSize 64458.
+      Fully open — no key, no registration, no advertised rate limit.
     humanURL: https://centaur.reading.ac.uk/
     baseURL: https://centaur.reading.ac.uk/cgi/oai2
     tags: [ Repository, OAI-PMH, Open Access, Metadata, Research, EPrints ]
@@ -70,13 +91,22 @@ apis:
         url: https://centaur.reading.ac.uk/information.html
       - type: API
         url: https://centaur.reading.ac.uk/cgi/oai2?verb=Identify
+      - type: OpenAPI
+        url: openapi/university-of-reading-centaur-oai-pmh-openapi.yml
+      - type: x-conformance
+        url: conformance/university-of-reading-conformance.yml
   - aid: university-of-reading:research-data-archive-oai-pmh
     name: Research Data Archive OAI-PMH Metadata API
+    x-operator: institution
     description: >-
-      OAI-PMH metadata harvesting interface for the University of Reading Research
-      Data Archive (EPrints), a multidisciplinary service for the registration,
-      preservation, and publication of research datasets produced at the university.
-      The Identify endpoint resolves live (HTTP 200).
+      OAI-PMH 2.0 metadata harvesting interface for the University of Reading Research Data Archive,
+      the institution's multidisciplinary service for registering, preserving and publishing research
+      datasets. Operated by the university on its own host; EPrints underneath. Verified live
+      2026-09-01: repositoryName "University of Reading Research Data Archive", adminEmail
+      researchdata@reading.ac.uk, earliestDatestamp 2026-06-05, six metadata prefixes (didl, mets,
+      oai_bibl, oai_dc, rdf, uketd_dc), ListSets returning hex-encoded EPrints set specs. Datasets
+      deposited here receive DOIs — this host is the URL registered for the university's DataCite
+      repository client bl.reading. Fully open, no credentials.
     humanURL: https://researchdata.reading.ac.uk/
     baseURL: https://researchdata.reading.ac.uk/cgi/oai2
     tags: [ Repository, OAI-PMH, Research Data, Open Data, Metadata, EPrints ]
@@ -85,15 +115,269 @@ apis:
         url: https://researchdata.reading.ac.uk/
       - type: API
         url: https://researchdata.reading.ac.uk/cgi/oai2?verb=Identify
+      - type: OpenAPI
+        url: openapi/university-of-reading-research-data-archive-oai-pmh-openapi.yml
+      - type: x-conformance
+        url: conformance/university-of-reading-conformance.yml
+  - aid: university-of-reading:centaur-eprints-rest
+    name: CentAUR Repository REST Listings
+    x-operator: institution
+    description: >-
+      The read-only EPrints REST interface on CentAUR. GET /rest/ returns the dataset index (eprint,
+      user, subject) and GET /rest/eprint/ enumerates every record id — 6.5 MB of ids at probe time —
+      each linking to a per-record XML document. The listings are open; the per-record XML is not:
+      GET /rest/eprint/5.xml returned 401 "EPrints REST: Auth Required" on 2026-09-01, and no public
+      route to a credential exists. Callers wanting the metadata without credentials should harvest
+      OAI-PMH instead. Separately measured: /cgi/search and /cgi/export on this host sit behind an
+      Anubis bot challenge that answers HTTP 200 with an interstitial rather than the document.
+    humanURL: https://centaur.reading.ac.uk/
+    baseURL: https://centaur.reading.ac.uk/rest/
+    tags: [ Repository, EPrints, Metadata, Research, Read-Only ]
+    properties:
+      - type: OpenAPI
+        url: openapi/university-of-reading-eprints-rest-openapi.yml
+      - type: Documentation
+        url: https://centaur.reading.ac.uk/information.html
+      - type: Authentication
+        url: authentication/university-of-reading-authentication.yml
+  - aid: university-of-reading:research-data-archive-eprints-rest
+    name: Research Data Archive REST Listings
+    x-operator: institution
+    description: >-
+      The same read-only EPrints REST interface on the Research Data Archive host. GET /rest/,
+      /rest/eprint/ (47 KB of dataset ids) and /rest/subject/ each returned 200 unauthenticated on
+      2026-09-01; GET /rest/eprint/1.xml returned 401. Recorded separately from CentAUR because it is
+      a distinct deployment on a distinct host holding distinct content — the datasets rather than
+      the publications.
+    humanURL: https://researchdata.reading.ac.uk/
+    baseURL: https://researchdata.reading.ac.uk/rest/
+    tags: [ Repository, EPrints, Research Data, Metadata, Read-Only ]
+    properties:
+      - type: OpenAPI
+        url: openapi/university-of-reading-eprints-rest-openapi.yml
+      - type: Authentication
+        url: authentication/university-of-reading-authentication.yml
+  - aid: university-of-reading:uk-federation-idp
+    name: UK Access Management Federation Identity Provider Entity
+    x-operator: federation
+    description: >-
+      The University of Reading's own SAML identity provider entity, registered in the UK Access
+      Management Federation and published in eduGAIN. entityID https://reading.ac.uk/oala/metadata,
+      OrganizationName "The University of Reading", scoped to reading.ac.uk and reading.edu.my (the
+      Malaysia campus). Its metadata is retrievable from the federation's MDQ service and was
+      confirmed live on 2026-09-01 (200, application/samlmetadata+xml, 7,773 bytes), advertising a
+      SAML 2.0 HTTP-Redirect SSO endpoint and a Shibboleth 1.0 AuthnRequest endpoint, both resolving
+      to login.openathens.net — the university's chosen implementation is OpenAthens LA, and no
+      Shibboleth IdP host of its own resolves in DNS. A federation is shared by definition; the
+      entity, the scope and the users behind it are the institution's.
+    humanURL: https://www.ukfederation.org.uk/
+    baseURL: http://mdq.ukfederation.org.uk/entities/%7Bsha1%7D57cf958ecb2c90e4fb339c8cf8a95dcee2d68101
+    tags: [ Identity Federation, SAML, Shibboleth, eduGAIN, Single Sign-On ]
+    properties:
+      - type: API
+        url: http://mdq.ukfederation.org.uk/entities/%7Bsha1%7D57cf958ecb2c90e4fb339c8cf8a95dcee2d68101
+      - type: Authentication
+        url: authentication/university-of-reading-authentication.yml
+      - type: x-conformance
+        url: conformance/university-of-reading-conformance.yml
+  - aid: university-of-reading:entra-id-tenant
+    name: Microsoft Entra ID Tenant OpenID Connect Discovery
+    x-operator: federation
+    description: >-
+      The university's institutional identity plane. Tenant 4ffa3bc4-ecfc-48c0-9080-f5e43ff90e5f,
+      whose OpenID Connect discovery document is public and complete at
+      login.microsoftonline.com/reading.ac.uk/v2.0/.well-known/openid-configuration (verified
+      2026-09-01). The realm lookup returns NameSpaceType "Managed" and FederationBrandName
+      "University of Reading", so there is no on-premises federation server behind it. Probing
+      timetable.reading.ac.uk and myid.reading.ac.uk each redirected into this tenant, which is how
+      its scope was confirmed. The endpoint is Microsoft's; the tenant, its applications and its
+      users are Reading's. No self-service application registration is available to outside
+      developers.
+    humanURL: https://www.reading.ac.uk/digital-technology-services
+    baseURL: https://login.microsoftonline.com/reading.ac.uk/v2.0/.well-known/openid-configuration
+    tags: [ Identity Federation, OpenID Connect, OAuth, Single Sign-On, Entra ID ]
+    properties:
+      - type: API
+        url: https://login.microsoftonline.com/reading.ac.uk/v2.0/.well-known/openid-configuration
+      - type: Authentication
+        url: authentication/university-of-reading-authentication.yml
+  - aid: university-of-reading:datacite-membership
+    name: DataCite Membership and DOI Prefixes
+    x-operator: registry
+    description: >-
+      The University of Reading is a DataCite member — a fact about the institution, not a contract
+      it operates. api.datacite.org/providers/pclw returns provider "University of Reading", symbol
+      PCLW, organizationType academicInstitution, memberType consortium_organization under consortium
+      blco, country GB, rorId https://ror.org/05v62cm79. Four DOI prefixes are assigned — 10.17864,
+      10.48683, 10.83281, 10.83004 — and three repository clients, of which bl.reading is registered
+      to researchdata.reading.ac.uk and pclw.bnuteb to the university's Elsevier Pure instance. The
+      registry's own API is DataCite's and is not saved here.
+    humanURL: https://www.reading.ac.uk/library
+    baseURL: https://api.datacite.org/providers/pclw
+    tags: [ DOI, DataCite, Persistent Identifiers, Registry, Research Data ]
+    properties:
+      - type: API
+        url: https://api.datacite.org/providers/pclw
+      - type: x-conformance
+        url: conformance/university-of-reading-conformance.yml
+  - aid: university-of-reading:ror-registration
+    name: ROR Organization Registration
+    x-operator: registry
+    description: >-
+      The university's entry in the Research Organization Registry, https://ror.org/05v62cm79 —
+      machine-readable identity for the institution itself. The record carries domain reading.ac.uk,
+      established 1926, location Reading, England, GB, cross-references to GRID grid.9435.b, ISNI
+      0000 0004 0457 9566, Wikidata Q1432632 and Funder Registry 501100000839, and one child
+      organisation, the Centre for the Observation and Modelling of Earthquakes, Volcanoes and
+      Tectonics. Verified live 2026-09-01. A registration, not an API the university runs.
+    humanURL: https://ror.org/05v62cm79
+    baseURL: https://api.ror.org/v2/organizations/05v62cm79
+    tags: [ ROR, Persistent Identifiers, Registry, Organization Identity ]
+    properties:
+      - type: API
+        url: https://api.ror.org/v2/organizations/05v62cm79
+  - aid: university-of-reading:module-catalogue
+    name: Module Catalogue
+    x-operator: institution
+    description: >-
+      The university's public module (course) catalogue, an ASP.NET application the university runs
+      itself at www.reading.ac.uk/modules. Browsable without a login by academic year and school —
+      /modules/schools?acyear=2026%2F7 and /modules/module?acyear=2026%2F7&school=BIO both returned
+      200 and rendered full module lists on 2026-09-01, five academic years deep. Honest limitation:
+      it is HTML only. The grid is server-rendered, no JSON or CSV representation is offered, and no
+      documented query interface exists, so it is a public data source rather than an API.
+    humanURL: https://www.reading.ac.uk/modules/
+    baseURL: https://www.reading.ac.uk/modules/
+    tags: [ Course Catalog, Modules, Teaching, HTML Only ]
+    properties:
+      - type: Documentation
+        url: https://www.reading.ac.uk/modules/
+  - aid: university-of-reading:met-climate-data
+    name: Meteorology Department Climate Data Services
+    x-operator: institution
+    description: >-
+      The Department of Meteorology's data server, metdata.reading.ac.uk, which publishes
+      observations from the University of Reading Atmospheric Observatory — one of the longest
+      continuous climatological records in the UK. Live and public: the AWS weather report at
+      www.met.reading.ac.uk/weatherdata/Reading_AWS_weather_report.html refreshes every 300 seconds,
+      and a dozen CGI query services under /cgi-bin/ (climate_extract, onthisday_query,
+      stats_climate_query, averages_sums, bhclimate_query, MMS, climate_plotter and others) each
+      returned 200 and accepted POSTed parameters on 2026-09-01. Honest limitation: these are
+      multi-step HTML form wizards over POST, not a documented API, and the newer "Public Data
+      Extractor" at metdata.reading.ac.uk/ext/ still carries a banner reading "Site under
+      construction. No data available yet" dated 03/07/2018. The /cgi-bin/ index itself returns 403 —
+      the scripts are callable, the directory is not listable.
+    humanURL: https://research.reading.ac.uk/meteorology/atmospheric-observatory/atmospheric-observatory-data/
+    baseURL: https://metdata.reading.ac.uk/
+    tags: [ Climate Data, Weather, Open Data, Observatory, HTML Forms ]
+    properties:
+      - type: Documentation
+        url: https://research.reading.ac.uk/meteorology/atmospheric-observatory/atmospheric-observatory-data/
+  - aid: university-of-reading:elsevier-pure-cris
+    name: Elsevier Pure Research Information System (tenant)
+    x-operator: tenant
+    description: >-
+      The University of Reading runs an Elsevier Pure instance at reading.elsevierpure.com, with a
+      staging sibling at reading-staging.elsevierpure.com. Both returned 401 on 2026-09-01 — the
+      tenancy is real but not publicly readable. Independently corroborated by DataCite, whose
+      repository client pclw.bnuteb under the university's provider record is named "Pure" with URL
+      reading-staging.elsevierpure.com. Recorded as a relationship only: the research information in
+      it is Reading's, the API contract is Elsevier's, and no Pure specification is saved in this
+      repository. This is the misattribution the university pipeline exists to prevent.
+    humanURL: https://reading.elsevierpure.com/
+    baseURL: https://reading.elsevierpure.com/
+    tags: [ CRIS, Research Information, Elsevier Pure, Tenant, Gated ]
+    properties:
+      - type: Documentation
+        url: https://reading.elsevierpure.com/
+  - aid: university-of-reading:talis-aspire-reading-lists
+    name: Talis Aspire Online Reading Lists (tenant)
+    x-operator: tenant
+    description: >-
+      The university's online reading list service, a Talis Aspire tenant at reading.rl.talis.com
+      whose canonical institution URI is http://readinglists.reading.ac.uk/. Genuinely
+      machine-readable: /index.json returned 200 application/json on 2026-09-01, serving RDF/JSON in
+      the AIISO vocabulary with aiiso:name "University of Reading" and the organisational unit tree
+      beneath it. The data — which modules read which resources — is the university's; the platform
+      and its contract are Talis's, so only the relationship is recorded here.
+    humanURL: https://reading.rl.talis.com/
+    baseURL: https://reading.rl.talis.com/index.json
+    tags: [ Reading Lists, Library, Linked Data, Talis Aspire, Tenant ]
+    properties:
+      - type: API
+        url: https://reading.rl.talis.com/index.json
+  - aid: university-of-reading:library-catalogue
+    name: SirsiDynix Enterprise Library Catalogue (tenant)
+    x-operator: tenant
+    description: >-
+      The library's catalogue, a SirsiDynix Enterprise tenant at
+      rdg.ent.sirsidynix.net.uk/client/en_GB/library (200 on 2026-09-01), linked from the library's
+      own catalogues page. Alongside it the library runs a ProQuest Summon discovery tenant at
+      reading.summon.serialssolutions.com (200) and a Springshare LibGuides tenant at
+      libguides.reading.ac.uk, which CNAMEs to secure-eu.libguides.com — the textbook case of an
+      institution subdomain that is really a vendor account. All three are recorded as tenancies; no
+      vendor catalogue contract is saved under this institution.
+    humanURL: https://www.reading.ac.uk/library/using-the-library/catalogues
+    baseURL: https://rdg.ent.sirsidynix.net.uk/client/en_GB/library
+    tags: [ Library, Discovery, Catalog, SirsiDynix, Tenant ]
+    properties:
+      - type: Documentation
+        url: https://www.reading.ac.uk/library/using-the-library/catalogues
+  - aid: university-of-reading:timetable
+    name: CMISGo Timetabling (gated)
+    x-operator: institution
+    description: >-
+      Student and staff timetabling at timetable.reading.ac.uk. Operator is the institution — the
+      host is the university's own registrable domain and the deployment is theirs — while the
+      application itself is Advanced's CMISGo product, so no contract is saved for it. It is gated: a
+      request on 2026-09-01 redirected straight into the university's Entra ID tenant
+      (wtrealm=https://timetable.reading.ac.uk/cmisgo/). No public timetable data and no API surface;
+      recorded so the class is not mistaken for missing.
+    humanURL: https://timetable.reading.ac.uk/
+    baseURL: https://timetable.reading.ac.uk/
+    tags: [ Timetable, Scheduling, Gated, Single Sign-On, Vendor Software ]
+    properties:
+      - type: Authentication
+        url: authentication/university-of-reading-authentication.yml
 common:
+  - type: Website
+    url: https://www.reading.ac.uk/
+  - type: ResearchRepository
+    url: https://centaur.reading.ac.uk/
+  - type: ResearchData
+    url: https://researchdata.reading.ac.uk/
+  - type: OpenData
+    url: https://metdata.reading.ac.uk/
+  - type: CourseCatalog
+    url: https://www.reading.ac.uk/modules/
+  - type: LibraryCatalog
+    url: https://www.reading.ac.uk/library/using-the-library/catalogues
+  - type: IdentityFederation
+    url: http://mdq.ukfederation.org.uk/entities/%7Bsha1%7D57cf958ecb2c90e4fb339c8cf8a95dcee2d68101
+  - type: AIPolicy
+    url: https://www.reading.ac.uk/cqsd/artificial-intelligence
+  - type: AITooling
+    url: https://www.reading.ac.uk/digital-technology-services/ai-index-hub
+  - type: Documentation
+    url: https://centaur.reading.ac.uk/information.html
+  - type: Blog
+    url: https://blogs.reading.ac.uk/
+  - type: Support
+    url: https://www.reading.ac.uk/contact-us/
+  - type: TermsOfService
+    url: https://www.reading.ac.uk/about/terms-of-use
+  - type: PrivacyPolicy
+    url: https://www.reading.ac.uk/about/privacy
+  - type: LinkedIn
+    url: https://uk.linkedin.com/school/university-of-reading/
+  - type: x-conformance
+    url: conformance/university-of-reading-conformance.yml
+  - type: Authentication
+    url: authentication/university-of-reading-authentication.yml
   - type: VulnerabilityDisclosure
     url: security/university-of-reading-vulnerability-disclosure.yml
   - type: DomainSecurity
     url: security/university-of-reading-domain-security.yml
-  - type: Website
-    url: https://www.reading.ac.uk/
-  - type: LinkedIn
-    url: https://uk.linkedin.com/school/university-of-reading/
   - type: Plans
     url: plans/university-of-reading-plans-pricing.yml
   - type: RateLimits
@@ -102,6 +386,103 @@ common:
     url: finops/university-of-reading-finops.yml
   - type: Review
     url: review.yml
+x-coverage:
+  state: covered
+  reason: covered
+  generated: '2026-09-01'
+  method: probed
+  detail: >-
+    Every surface class the university pipeline hunts was probed on 2026-09-01 and the result is a
+    small but complete and honest profile. Two institution-operated machine-readable APIs exist and
+    both work: the OAI-PMH 2.0 endpoints for CentAUR (64,458 records) and the Research Data Archive,
+    open with no credentials, alongside the read-only EPrints /rest/ listings whose per-record XML
+    returns 401. There is no developer portal and no open-data portal — api.reading.ac.uk,
+    data.reading.ac.uk, opendata.reading.ac.uk and developer.reading.ac.uk do not resolve at all,
+    and www.reading.ac.uk/llms.txt and /.well-known/security.txt both 404. The university does run an
+    Azure API Management gateway on its own domain (esb-prod-api.reading.ac.uk, resolving to
+    uks-common-p-001-apim.azure-api.net, with a UAT sibling) but every path probed returns APIM's
+    JSON 404 envelope: a gateway with no published route. Identity is the strongest find — a UK
+    Access Management Federation SAML entity, entityID https://reading.ac.uk/oala/metadata, whose
+    metadata is live in the federation MDQ, plus a public Entra ID OIDC discovery document. Registry
+    memberships are real and recorded: DataCite provider PCLW with four DOI prefixes, and ROR
+    05v62cm79. The course catalogue and the Meteorology Department's climate data services are
+    genuinely institution-operated and genuinely public, but both are HTML-only — the module
+    catalogue is server-rendered with no JSON, and the climate services are multi-step POST form
+    wizards, with the newer Data Extractor still showing a 2018 "no data available yet" banner.
+    Library discovery, reading lists, LibGuides, the CRIS and timetabling are all vendor tenancies
+    and are recorded as relationships, never as Reading's contracts; no Figshare tenancy exists —
+    reading.figshare.com returns the same AWS WAF challenge as a nonsense subdomain does, so the
+    apparent host is not evidence. Two measurement traps worth naming: /cgi/search and /cgi/export on
+    centaur.reading.ac.uk answer HTTP 200 with an Anubis bot interstitial rather than the requested
+    document, and www.reading.ac.uk serves its 404s from /search/404.htm with a correct 404 status.
+  evidence:
+  - url: https://centaur.reading.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+  - url: https://centaur.reading.ac.uk/cgi/oai2?verb=ListMetadataFormats
+    status: 200
+  - url: https://centaur.reading.ac.uk/cgi/oai2?verb=ListRecords&metadataPrefix=oai_dc
+    status: 200
+  - url: https://researchdata.reading.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+  - url: https://researchdata.reading.ac.uk/cgi/oai2?verb=ListSets
+    status: 200
+  - url: https://centaur.reading.ac.uk/rest/
+    status: 200
+  - url: https://centaur.reading.ac.uk/rest/eprint/
+    status: 200
+  - url: https://centaur.reading.ac.uk/rest/eprint/5.xml
+    status: 401
+  - url: https://researchdata.reading.ac.uk/rest/eprint/1.xml
+    status: 401
+  - url: https://centaur.reading.ac.uk/cgi/search/simple
+    status: 200
+  - url: http://mdq.ukfederation.org.uk/entities/%7Bsha1%7D57cf958ecb2c90e4fb339c8cf8a95dcee2d68101
+    status: 200
+  - url: https://md.seamlessaccess.org/entities/?q=reading
+    status: 200
+  - url: https://login.microsoftonline.com/reading.ac.uk/v2.0/.well-known/openid-configuration
+    status: 200
+  - url: https://api.datacite.org/providers/pclw
+    status: 200
+  - url: https://api.ror.org/v2/organizations/05v62cm79
+    status: 200
+  - url: https://api.crossref.org/members?query=university+of+reading
+    status: 200
+  - url: https://reading.rl.talis.com/index.json
+    status: 200
+  - url: https://reading.elsevierpure.com/
+    status: 401
+  - url: https://rdg.ent.sirsidynix.net.uk/client/en_GB/library
+    status: 200
+  - url: https://reading.summon.serialssolutions.com/
+    status: 200
+  - url: https://libguides.reading.ac.uk/
+    status: 200
+  - url: https://timetable.reading.ac.uk/
+    status: 200
+  - url: https://risis.reading.ac.uk/urd/sits.urd/run/siw_lgn
+    status: 200
+  - url: https://esb-prod-api.reading.ac.uk/
+    status: 404
+  - url: https://esb-uat-api.reading.ac.uk/
+    status: 404
+  - url: https://www.reading.ac.uk/modules/
+    status: 200
+  - url: https://metdata.reading.ac.uk/
+    status: 200
+  - url: https://metdata.reading.ac.uk/cgi-bin/onthisday_query.cgi
+    status: 200
+  - url: https://metdata.reading.ac.uk/ext/
+    status: 200
+  - url: https://www.reading.ac.uk/llms.txt
+    status: 404
+  - url: https://www.reading.ac.uk/.well-known/security.txt
+    status: 404
+  - url: https://www.reading.ac.uk/cqsd/artificial-intelligence
+    status: 200
+  - url: https://www.reading.ac.uk/digital-technology-services/ai-index-hub
+    status: 200
+  checked: '2026-09-01'
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
