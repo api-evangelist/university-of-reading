@@ -90,6 +90,12 @@ apis:
   - SAML
   - Shibboleth
   - eduGAIN
+  - SSO
+  tags_raw:
+  - Identity Federation
+  - SAML
+  - Shibboleth
+  - eduGAIN
   - Single Sign-On
   properties:
   - type: API
@@ -113,6 +119,12 @@ apis:
   humanURL: https://www.reading.ac.uk/digital-technology-services
   baseURL: https://login.microsoftonline.com/reading.ac.uk/v2.0/.well-known/openid-configuration
   tags:
+  - Identity Federation
+  - OpenID Connect
+  - Authentication
+  - SSO
+  - Entra ID
+  tags_raw:
   - Identity Federation
   - OpenID Connect
   - OAuth
@@ -226,6 +238,12 @@ apis:
   humanURL: https://reading.elsevierpure.com/
   baseURL: https://reading.elsevierpure.com/
   tags:
+  - CRI
+  - Research Information
+  - Elsevier Pure
+  - Tenants
+  - Gated
+  tags_raw:
   - CRIS
   - Research Information
   - Elsevier Pure
@@ -251,6 +269,12 @@ apis:
   - Library
   - Linked Data
   - Talis Aspire
+  - Tenants
+  tags_raw:
+  - Reading Lists
+  - Library
+  - Linked Data
+  - Talis Aspire
   - Tenant
   properties:
   - type: API
@@ -272,6 +296,12 @@ apis:
   - Discovery
   - Catalog
   - SirsiDynix
+  - Tenants
+  tags_raw:
+  - Library
+  - Discovery
+  - Catalog
+  - SirsiDynix
   - Tenant
   properties:
   - type: Documentation
@@ -288,6 +318,12 @@ apis:
   humanURL: https://timetable.reading.ac.uk/
   baseURL: https://timetable.reading.ac.uk/
   tags:
+  - Timetable
+  - Scheduling
+  - Gated
+  - SSO
+  - Vendor Software
+  tags_raw:
   - Timetable
   - Scheduling
   - Gated
