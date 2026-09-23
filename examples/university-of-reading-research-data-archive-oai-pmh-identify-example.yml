@@ -1,0 +1,65 @@
+generated: '2026-09-01'
+method: harvested
+source: https://researchdata.reading.ac.uk/cgi/oai2?verb=Identify
+request:
+  method: GET
+  url: https://researchdata.reading.ac.uk/cgi/oai2?verb=Identify
+  headers:
+    Accept: '*/*'
+  auth: none
+response:
+  status: 200
+  content_type: text/xml; charset=UTF-8
+  note: >-
+    Unmodified response body captured live on 2026-09-01 with no credentials. repositoryName "University of Reading Research Data Archive", adminEmail researchdata@reading.ac.uk.
+  body: |
+    <?xml version='1.0' encoding='UTF-8'?>
+    <?xml-stylesheet type='text/xsl' href='/oai2.xsl' ?>
+    <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+      <responseDate>2026-09-01T17:30:23Z</responseDate>
+      <request verb="Identify">https://researchdata.reading.ac.uk/cgi/oai2</request>
+      <Identify>
+        <repositoryName>University of Reading Research Data Archive</repositoryName>
+        <baseURL>https://researchdata.reading.ac.uk/cgi/oai2</baseURL>
+        <protocolVersion>2.0</protocolVersion>
+        <adminEmail>researchdata@reading.ac.uk</adminEmail>
+        <earliestDatestamp>2026-06-05T00:04:54Z</earliestDatestamp>
+        <deletedRecord>persistent</deletedRecord>
+        <granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+        <description>
+          <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+            <scheme>oai</scheme>
+            <repositoryIdentifier>researchdata.reading.ac.uk</repositoryIdentifier>
+            <delimiter>:</delimiter>
+            <sampleIdentifier>oai:researchdata.reading.ac.uk:538</sampleIdentifier>
+          </oai-identifier>
+        </description>
+        <description>
+          <eprints xmlns="http://www.openarchives.org/OAI/1.1/eprints" xsi:schemaLocation="http://www.openarchives.org/OAI/1.1/eprints http://www.openarchives.org/OAI/1.1/eprints.xsd">
+            <content>
+              <URL>https://researchdata.reading.ac.uk/policies.html</URL>
+            </content>
+            <metadataPolicy>
+              <text>No metadata policy defined. 
+    This server has not yet been fully configured.
+    Please contact the admin for more information, but if in doubt assume that
+    NO rights at all are granted to this data.
+    </text>
+            </metadataPolicy>
+            <dataPolicy>
+              <text>No data policy defined. 
+    This server has not yet been fully configured.
+    Please contact the admin for more information, but if in doubt assume that
+    NO rights at all are granted to this data.
+    </text>
+            </dataPolicy>
+            <submissionPolicy>
+              <text>No submission-data policy defined. 
+    This server has not yet been fully configured.
+    </text>
+            </submissionPolicy>
+            <comment>This system is running eprints server software (EPrints 3.3.16) developed at the University of Southampton. For more information see http://www.eprints.org/</comment>
+          </eprints>
+        </description>
+      </Identify>
+    </OAI-PMH>

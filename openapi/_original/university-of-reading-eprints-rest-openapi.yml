@@ -1,0 +1,152 @@
+# x-method: derived
+openapi: 3.1.0
+info:
+  title: University of Reading Repository REST Interface
+  version: '3.4'
+  summary: >-
+    The read-only EPrints REST interface exposed on the University of Reading's two institutional
+    repository hosts, CentAUR and the Research Data Archive.
+  description: >-
+    Machine-readable description of the /rest/ interface served by the University of Reading on its
+    two repository hosts — centaur.reading.ac.uk (CentAUR, the institutional research-output
+    repository) and researchdata.reading.ac.uk (the Research Data Archive). Both hosts are the
+    university's own; the software serving them is EPrints 3.4.6, open-source repository software
+    originally from the University of Southampton. The engineering of the interface is EPrints';
+    the deployment, the host, the data and the operation are the University of Reading's.
+
+
+    This document was NOT published by the University of Reading. It was derived by API Evangelist
+    from live, unauthenticated probes on 2026-09-01. Each path below was fetched and its status code
+    and response recorded. Nothing is described that was not observed.
+
+
+    What is open and what is not, as measured:
+
+    - GET /rest/ returned 200 on both hosts, listing the available datasets.
+
+    - GET /rest/eprint/ returned 200 (6.5 MB on CentAUR, 47 KB on the Research Data Archive),
+      enumerating every record id with links to a per-record directory and a per-record .xml.
+
+    - GET /rest/subject/ and GET /rest/user/ returned 200 on both hosts.
+
+    - GET /rest/eprint/{id}.xml returned **401 Auth Required** on both hosts. The listing is public;
+      the record payload behind it is not.
+
+    Callers wanting bulk machine-readable metadata without credentials should use the OAI-PMH
+    endpoint at /cgi/oai2 instead, which is fully open and is described in its own document in this
+    repository.
+
+
+    One further measured constraint: the repository's own search and per-record export paths
+    (/cgi/search, /cgi/export/...) sit behind an Anubis bot challenge and return an interstitial
+    HTML page with HTTP 200 rather than the requested representation. /rest/ and /cgi/oai2 were not
+    challenged.
+  contact:
+    name: CentAUR repository team, University of Reading
+    email: centaur@reading.ac.uk
+    url: https://centaur.reading.ac.uk/information.html
+servers:
+  - url: https://centaur.reading.ac.uk
+    description: CentAUR — Central Archive at the University of Reading (research outputs)
+  - url: https://researchdata.reading.ac.uk
+    description: University of Reading Research Data Archive (research datasets)
+tags:
+  - name: Repository
+    description: Read-only EPrints REST dataset listings served by the university's repositories.
+paths:
+  /rest/:
+    get:
+      tags: [ Repository ]
+      operationId: listDatasets
+      summary: List the datasets exposed by the repository
+      description: >-
+        Returns an XHTML index of the datasets the REST interface exposes. Observed values on both
+        hosts: eprint, user, subject.
+      responses:
+        '200':
+          description: XHTML index of datasets. Observed 2026-09-01 on both hosts.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/eprint/:
+    get:
+      tags: [ Repository ]
+      operationId: listEprints
+      summary: List every record id in the repository
+      description: >-
+        Returns an XHTML index of every eprint id, each linking to a per-record directory
+        (`{id}/`) and a per-record XML document (`{id}.xml`). Large — 6.5 MB on CentAUR at probe
+        time. The index itself is unauthenticated; the per-record XML it links to is not.
+      responses:
+        '200':
+          description: XHTML index of record ids. Observed 2026-09-01 on both hosts.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/eprint/{eprintId}.xml:
+    get:
+      tags: [ Repository ]
+      operationId: getEprint
+      summary: Retrieve one record as EPrints XML (authenticated)
+      description: >-
+        Returns the EPrints XML representation of a single record. Measured to require
+        authentication: an unauthenticated GET returned 401 with an "EPrints REST: Auth Required"
+        body on both hosts on 2026-09-01. No public credential issuance process was found; the
+        open route to this metadata is the OAI-PMH endpoint.
+      parameters:
+        - name: eprintId
+          in: path
+          required: true
+          description: Numeric EPrints record id, as enumerated by GET /rest/eprint/.
+          schema:
+            type: integer
+            examples: [ 5 ]
+      responses:
+        '200':
+          description: EPrints XML record. Not observed — the endpoint requires credentials we do not hold.
+          content:
+            text/xml:
+              schema:
+                type: string
+                contentMediaType: text/xml
+        '401':
+          description: Auth Required. This is what an unauthenticated caller receives, and what was observed.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/subject/:
+    get:
+      tags: [ Repository ]
+      operationId: listSubjects
+      summary: List the repository's subject taxonomy
+      description: Returns an XHTML index of subject terms. Observed 200 on both hosts.
+      responses:
+        '200':
+          description: XHTML index of subjects.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/user/:
+    get:
+      tags: [ Repository ]
+      operationId: listUsers
+      summary: List the repository's user records
+      description: >-
+        Returns an XHTML index of user record ids. Observed 200 on both hosts. Only ids are listed;
+        the per-user documents behind them require authentication in the same way record XML does.
+      responses:
+        '200':
+          description: XHTML index of user record ids.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html

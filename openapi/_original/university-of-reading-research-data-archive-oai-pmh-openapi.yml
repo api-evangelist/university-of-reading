@@ -1,0 +1,133 @@
+# x-method: derived
+openapi: 3.1.0
+info:
+  title: University of Reading Research Data Archive OAI-PMH Metadata Interface
+  version: '2.0'
+  summary: OAI-PMH 2.0 harvesting interface for the University of Reading Research Data Archive.
+  description: >-
+    Machine-readable description of the OAI-PMH 2.0 endpoint operated by the University of Reading
+    for the University of Reading Research Data Archive, the institution's multidisciplinary service
+    for the registration, preservation and publication of research datasets produced at the
+    university. The endpoint is operated by the university on its own host,
+    researchdata.reading.ac.uk; the repository software underneath is EPrints (open source,
+    originally from the University of Southampton), which the Identify response states in its
+    eprints description block.
+
+
+    This document was NOT published by the University of Reading. It was derived by API Evangelist
+    from live, unauthenticated probes of the endpoint on 2026-09-01 — Identify, ListMetadataFormats
+    and ListSets were each fetched and their responses read. Every parameter, verb and metadata
+    prefix named here was observed in one of those responses.
+
+
+    Observed at probe time: repositoryName "University of Reading Research Data Archive",
+    protocolVersion 2.0, adminEmail researchdata@reading.ac.uk, earliestDatestamp
+    2026-06-05T00:04:54Z, deletedRecord "persistent", granularity YYYY-MM-DDThh:mm:ssZ,
+    repositoryIdentifier researchdata.reading.ac.uk, sample identifier
+    oai:researchdata.reading.ac.uk:538.
+
+
+    Datasets deposited here are assigned DOIs; the University of Reading is a DataCite member
+    (provider symbol PCLW) and researchdata.reading.ac.uk is the URL registered for its DataCite
+    repository client bl.reading.
+
+
+    Access is open: no API key, no registration and no authentication of any kind is required.
+  contact:
+    name: Research Data Archive team, University of Reading
+    email: researchdata@reading.ac.uk
+    url: https://researchdata.reading.ac.uk/
+  license:
+    name: OAI-PMH 2.0 protocol
+    url: http://www.openarchives.org/OAI/openarchivesprotocol.html
+servers:
+  - url: https://researchdata.reading.ac.uk
+    description: Research Data Archive production repository, operated by the University of Reading
+tags:
+  - name: OAI-PMH
+    description: OAI-PMH 2.0 verbs served by the repository at /cgi/oai2.
+paths:
+  /cgi/oai2:
+    get:
+      tags: [ OAI-PMH ]
+      operationId: oaiPmhRequest
+      summary: Issue an OAI-PMH 2.0 request
+      description: >-
+        Single OAI-PMH request entry point. The verb parameter selects the operation. Responses are
+        XML (text/xml; charset=UTF-8) in the http://www.openarchives.org/OAI/2.0/ namespace and
+        always carry responseDate and a request element echoing the arguments. Errors are returned
+        as HTTP 200 with an <error> element carrying an OAI-PMH error code, not as an HTTP status.
+      parameters:
+        - name: verb
+          in: query
+          required: true
+          description: The OAI-PMH verb to invoke.
+          schema:
+            type: string
+            enum: [ Identify, ListMetadataFormats, ListSets, ListIdentifiers, ListRecords, GetRecord ]
+          examples:
+            identify:
+              value: Identify
+            listRecords:
+              value: ListRecords
+        - name: metadataPrefix
+          in: query
+          required: false
+          description: >-
+            Metadata format for ListRecords, ListIdentifiers and GetRecord. Observed formats
+            advertised by ListMetadataFormats on this endpoint.
+          schema:
+            type: string
+            enum: [ didl, mets, oai_bibl, oai_dc, rdf, uketd_dc ]
+        - name: identifier
+          in: query
+          required: false
+          description: 'OAI identifier of a single record, for GetRecord. Form: oai:researchdata.reading.ac.uk:<eprintid>.'
+          schema:
+            type: string
+            examples: [ 'oai:researchdata.reading.ac.uk:538' ]
+        - name: set
+          in: query
+          required: false
+          description: >-
+            Set to restrict a harvest to. Set specs on this endpoint are hex-encoded EPrints field
+            filters (for example 7374617475733D707562 = "status=pub"); ListSets returns the
+            available specs with human-readable setNames.
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: false
+          description: Lower bound on record datestamp, in the repository's granularity (YYYY-MM-DDThh:mm:ssZ).
+          schema:
+            type: string
+        - name: until
+          in: query
+          required: false
+          description: Upper bound on record datestamp, in the repository's granularity (YYYY-MM-DDThh:mm:ssZ).
+          schema:
+            type: string
+        - name: resumptionToken
+          in: query
+          required: false
+          description: >-
+            Continuation token returned by a previous incomplete list response. Observed tokens carry
+            completeListSize, cursor and expirationDate attributes and expire 24 hours after issue.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            OAI-PMH XML response. Protocol-level failures (badVerb, badArgument, idDoesNotExist,
+            noRecordsMatch, cannotDisseminateFormat) are also returned with HTTP 200 and an <error>
+            element.
+          content:
+            text/xml:
+              schema:
+                type: string
+                contentMediaType: text/xml
+                description: OAI-PMH 2.0 response document.
+              examples:
+                identify:
+                  summary: Identify response observed 2026-09-01
+                  externalValue: ../examples/university-of-reading-research-data-archive-oai-pmh-identify-example.yml

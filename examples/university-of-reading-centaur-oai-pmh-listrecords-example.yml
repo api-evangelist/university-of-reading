@@ -1,0 +1,52 @@
+generated: '2026-09-01'
+method: harvested
+source: https://centaur.reading.ac.uk/cgi/oai2?verb=ListRecords&metadataPrefix=oai_dc
+request:
+  method: GET
+  url: https://centaur.reading.ac.uk/cgi/oai2?verb=ListRecords&metadataPrefix=oai_dc
+  headers:
+    Accept: '*/*'
+  auth: none
+response:
+  status: 200
+  content_type: text/xml; charset=UTF-8
+  note: >-
+    Captured live on 2026-09-01 (276,725 bytes, 100 records). TRIMMED for this artifact: the first record and the resumptionToken are reproduced verbatim and the other 99 records are omitted at the marked point. The resumptionToken reported completeListSize="64458" — the size of the CentAUR corpus at probe time — and expires 24 hours after issue.
+  body: |
+    <?xml version='1.0' encoding='UTF-8'?>
+    <?xml-stylesheet type='text/xsl' href='/oai2.xsl' ?>
+    <OAI-PMH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+      <responseDate>2026-09-01T17:30:25Z</responseDate>
+      <request metadataPrefix="oai_dc" verb="ListRecords">https://centaur.reading.ac.uk/cgi/oai2</request>
+      <ListRecords>
+        <record>
+        <header>
+          <identifier>oai:centaur.reading.ac.uk:2</identifier>
+          <datestamp>2026-07-14T11:47:29Z</datestamp>
+          <setSpec>7374617475733D707562</setSpec>
+          <setSpec>74797065733D636F6E666572656E63655F6974656D</setSpec>
+          <setSpec>6469766973696F6E733D315F3736303833353839</setSpec></header>
+        <metadata>
+          <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+            <dc:relation>https://centaur.reading.ac.uk/2/</dc:relation>
+            <dc:title>Filter for Car Tracking Based on Acceleration and Steering Angle</dc:title>
+            <dc:creator>Maybank, S.J.</dc:creator>
+            <dc:creator>Worrall, A.D</dc:creator>
+            <dc:creator>Sullivan, G.D.</dc:creator>
+            <dc:subject>004 Data processing &amp; computer science</dc:subject>
+            <dc:subject>005 Computer programming, programs &amp; data</dc:subject>
+            <dc:description>The motion of a car is described using a stochastic model in which the driving processes are the steering angle and the tangential acceleration. The model incorporates exactly the kinematic constraint that the wheels do not slip sideways. Two filters based on this model have been implemented, namely the standard EKF, and a new filter (the CUF) in which the expectation and the covariance of the system state are propagated accurately. Experiments show that i) the CUF is better than the EKF at predicting future positions of the car; and ii) the filter outputs can be used to control the measurement process, leading to improved ability to recover from errors in predictive tracking.</dc:description>
+            <dc:date>1996-09-09</dc:date>
+            <dc:type>Conference or Workshop Item</dc:type>
+            <dc:type>PeerReviewed</dc:type>
+            <dc:format>text</dc:format>
+            <dc:language>en</dc:language>
+            <dc:rights></dc:rights>
+            <dc:identifier>https://centaur.reading.ac.uk/2/2/CVG9602.pdf</dc:identifier>
+            <dc:identifier>  Maybank, S.J., Worrall, A.D. &lt;https://centaur.reading.ac.uk/view/creators/90000284.html&gt; and Sullivan, G.D.  (1996) Filter for Car Tracking Based on Acceleration and Steering Angle.  In: 7th British Machine Vision Conference, 9-12 Sept 1996, Edinburgh, pp10.       </dc:identifier></oai_dc:dc></metadata></record>
+    
+          <!-- 99 further <record> elements omitted from this capture -->
+    
+          <resumptionToken completeListSize="64458" expirationDate="2026-09-02T17:30:25Z" cursor="0">metadataPrefix%3Doai_dc%26offset%3D770</resumptionToken>
+      </ListRecords>
+    </OAI-PMH>

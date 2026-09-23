@@ -1,0 +1,29 @@
+{
+  "provider": "university-of-reading",
+  "sources": [
+    "_original/university-of-reading-centaur-oai-pmh-openapi.yml",
+    "_original/university-of-reading-eprints-rest-openapi.yml"
+  ],
+  "outputs": [
+    "university-of-reading-oai-pmh-api-openapi.yml",
+    "university-of-reading-repository-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "4 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "university-of-reading-centaur-oai-pmh-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "university-of-reading-eprints-rest-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/university-of-reading-research-data-archive-oai-pmh-openapi_2.yml: archived document superseded by a larger archived document",
+    "_original/university-of-reading-research-data-archive-oai-pmh-openapi.yml: archived document superseded by a larger archived document",
+    "_original/university-of-reading-eprints-rest-openapi_2.yml: archived document superseded by a larger archived document",
+    "_original/university-of-reading-centaur-oai-pmh-openapi_2.yml: archived document superseded by a larger archived document",
+    "university-of-reading-oai-pmh-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-reading-repository-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

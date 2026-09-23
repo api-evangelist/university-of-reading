@@ -1,0 +1,154 @@
+generated: '2026-09-01'
+method: harvested
+source: https://centaur.reading.ac.uk/cgi/oai2?verb=Identify
+request:
+  method: GET
+  url: https://centaur.reading.ac.uk/cgi/oai2?verb=Identify
+  headers:
+    Accept: '*/*'
+  auth: none
+response:
+  status: 200
+  content_type: text/xml; charset=UTF-8
+  note: >-
+    Unmodified response body captured from the live endpoint on 2026-09-01 with no credentials. It is the repository's own words, not ours: repositoryName CentAUR, adminEmail centaur@reading.ac.uk, and an eprints description block naming EPrints 3.4.6 as the software.
+  body: |
+    <?xml version='1.0' encoding='UTF-8'?>
+    <?xml-stylesheet type='text/xsl' href='/oai2.xsl' ?>
+    <OAI-PMH xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+      <responseDate>2026-09-01T17:30:22Z</responseDate>
+      <request verb="Identify">https://centaur.reading.ac.uk/cgi/oai2</request>
+      <Identify>
+        <repositoryName>CentAUR</repositoryName>
+        <baseURL>https://centaur.reading.ac.uk/cgi/oai2</baseURL>
+        <protocolVersion>2.0</protocolVersion>
+        <adminEmail>centaur@reading.ac.uk</adminEmail>
+        <earliestDatestamp>2021-07-09T06:57:26Z</earliestDatestamp>
+        <deletedRecord>persistent</deletedRecord>
+        <granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+        <description>
+          <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+            <scheme>oai</scheme>
+            <repositoryIdentifier>centaur.reading.ac.uk</repositoryIdentifier>
+            <delimiter>:</delimiter>
+            <sampleIdentifier>oai:centaur.reading.ac.uk:5</sampleIdentifier>
+          </oai-identifier>
+        </description>
+        <description>
+          <eprints xmlns="http://www.openarchives.org/OAI/1.1/eprints" xsi:schemaLocation="http://www.openarchives.org/OAI/1.1/eprints http://www.openarchives.org/OAI/1.1/eprints.xsd">
+            <content>
+              <text>1. This is an institutional or departmental repository.
+    2. The repository is restricted to:
+       (a) Journal articles
+       (b) Bibliographic references
+       (c) Conference and workshop papers
+       (d) Theses
+       (e) Unpublished reports and working papers
+       (f) Books, chapters and sections
+       (g) Datasets
+       (h) Multimedia and audio-visual materials
+       (i) Patents
+       (j) Other special item types
+       (k) Special materials: Exhibitions, Designs
+    3. Deposited items may include:
+       (a) submitted versions (as sent to journals for peer-review)
+       (b) accepted versions (author's final peer-reviewed drafts)
+       (c) published versions (publisher-created files)
+    4. Items are individually tagged with:
+       (a) their version type and date.
+       (b) their peer-review status.
+       (c) their publication status.
+    5. Principal Languages: English
+    </text>
+            </content>
+            <metadataPolicy>
+              <text>1. Anyone may access the metadata free of charge.
+    2. The metadata may be re-used in any medium without prior permission
+    for not-for-profit purposes
+    3. The metadata must not be re-used in any medium for commercial
+    purposes without formal permission.
+    </text>
+            </metadataPolicy>
+            <dataPolicy>
+              <text>1. Anyone may access full items free of charge.
+    2. Single copies of full items can be:
+       (a) reproduced, displayed or performed, and given to third parties in
+    any format or medium
+       (b) for personal research or study, educational, or not-for-profit
+    purposes without prior permission or charge.
+    provided:
+       (a) the authors, title and full bibliographic details are given
+       (b) a hyperlink and/or URL are given for the original metadata page
+       (c) the content is not changed in any way
+    3. Full items must not be harvested by robots except transiently for
+    full-text indexing or citation analysis
+    4. Full items must not be sold commercially in any format or medium.
+    5. Some full items are individually tagged with different rights
+    permissions and conditions.
+    6. This repository is not the publisher; it is merely the online
+    archive.
+    7. Mention of the repository is appreciated but not mandatory.
+    </text>
+            </dataPolicy>
+            <submissionPolicy>
+              <text>1. Items may only be deposited by accredited members of the institution
+    2. Authors may only submit their own work for archiving.
+    3. Eligible depositors must deposit bibliographic metadata for all their
+    publications.
+    4. Eligible depositors must deposit full texts of all their
+    publications, although they may delay making them publicly visible to
+    comply with publishers' embargos.
+    5. The administrator only vets items for the eligibility of
+    authors/depositors, relevance to the scope of the repository, valid
+    layout &amp; format, and the exclusion of spam
+    6. The validity and authenticity of the content of submissions is the
+    sole responsibility of the depositor.
+    7. Items can be deposited at any time, but will not be made publicly
+    visible until any publishers' or funders' embargo period has expired.
+    8. Any copyright violations are entirely the responsibility of the
+    authors/depositors.
+    9. If the repository receives proof of copyright violation, the relevant
+    item will be removed immediately.
+    </text>
+            </submissionPolicy>
+            <comment>1. Items will be retained indefinitely.
+    2. The repository will try to ensure continued readability and
+    accessibility.
+       (a) It may not be possible to guarantee the readability of some
+    unusual file formats.
+    3. The repository regularly backs up its files according to current best
+    practice.
+    4. The original bit stream is retained for all items, in addition to any
+    upgraded formats.
+    5. Items may be removed at the request of the author/copyright holder,
+    but this is strongly discouraged.
+    6. Acceptable reasons for withdrawal include:
+       (a) Journal publishers' rules
+       (b) Proven copyright violation or plagiarism
+       (c) Legal requirements and proven violations
+       (d) National Security
+       (e) Falsified research
+    7. Withdrawn items are not deleted per se, but are removed from public
+    view.
+    8. Withdrawn items' identifiers/URLs are retained indefinitely.
+    9. URLs will continue to point to 'tombstone' citations, to avoid broken
+    links and to retain item histories, with:
+       (a) a link to a replacement version, where available
+       (b) a note explaining the reasons for withdrawal
+    10. The metadata of withdrawn items will not be searchable.
+    11. Changes to deposited items are not permitted.
+    12. Errata and corrigenda lists may be included with the original record
+    if required.
+    13. If necessary, an updated version may be deposited.
+       (a) The earlier version may be withdrawn from public view.
+       (b) The item's persistent URL will always link to the latest version.
+       (c) There will be links between earlier and later versions, with the
+    most recent version clearly identified.
+    14. In the event of the repository being closed down, the database will
+    be transferred to another appropriate archive.
+    </comment>
+            <comment>This system is running eprints server software (EPrints 3.4.6) developed at the University of Southampton. For more information see https://www.eprints.org/</comment>
+          </eprints>
+        </description>
+      </Identify>
+    </OAI-PMH>

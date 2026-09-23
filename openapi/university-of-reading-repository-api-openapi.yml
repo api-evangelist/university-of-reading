@@ -1,0 +1,110 @@
+openapi: 3.2.0
+info:
+  title: University of Reading REST Interface Repository API
+  version: '3.4'
+  summary: The read-only EPrints REST interface exposed on the University of Reading's two institutional repository hosts, CentAUR and the Research Data Archive.
+  description: Machine-readable description of the /rest/ interface served by the University of Reading on its two repository hosts — centaur.reading.ac.uk (CentAUR, the institutional research-output repository) and researchdata.reading.ac.uk (the Research Data Archive).
+  contact:
+    name: CentAUR repository team, University of Reading
+    email: centaur@reading.ac.uk
+    url: https://centaur.reading.ac.uk/information.html
+servers:
+- url: https://centaur.reading.ac.uk
+  description: CentAUR — Central Archive at the University of Reading (research outputs)
+- url: https://researchdata.reading.ac.uk
+  description: University of Reading Research Data Archive (research datasets)
+tags:
+- name: Repository
+  description: Read-only EPrints REST dataset listings served by the university's repositories.
+paths:
+  /rest/:
+    get:
+      tags:
+      - Repository
+      operationId: listDatasets
+      summary: List the datasets exposed by the repository
+      description: 'Returns an XHTML index of the datasets the REST interface exposes. Observed values on both hosts: eprint, user, subject.'
+      responses:
+        '200':
+          description: XHTML index of datasets. Observed 2026-09-01 on both hosts.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/eprint/:
+    get:
+      tags:
+      - Repository
+      operationId: listEprints
+      summary: List every record id in the repository
+      description: Returns an XHTML index of every eprint id, each linking to a per-record directory (`{id}/`) and a per-record XML document (`{id}.xml`). Large — 6.5 MB on CentAUR at probe time. The index itself is unauthenticated; the per-record XML it links to is not.
+      responses:
+        '200':
+          description: XHTML index of record ids. Observed 2026-09-01 on both hosts.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/eprint/{eprintId}.xml:
+    get:
+      tags:
+      - Repository
+      operationId: getEprint
+      summary: Retrieve one record as EPrints XML (authenticated)
+      description: 'Returns the EPrints XML representation of a single record. Measured to require authentication: an unauthenticated GET returned 401 with an "EPrints REST: Auth Required" body on both hosts on 2026-09-01. No public credential issuance process was found; the open route to this metadata is the OAI-PMH endpoint.'
+      parameters:
+      - name: eprintId
+        in: path
+        required: true
+        description: Numeric EPrints record id, as enumerated by GET /rest/eprint/.
+        schema:
+          type: integer
+          examples:
+          - 5
+      responses:
+        '200':
+          description: EPrints XML record. Not observed — the endpoint requires credentials we do not hold.
+          content:
+            text/xml:
+              schema:
+                type: string
+                contentMediaType: text/xml
+        '401':
+          description: Auth Required. This is what an unauthenticated caller receives, and what was observed.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/subject/:
+    get:
+      tags:
+      - Repository
+      operationId: listSubjects
+      summary: List the repository's subject taxonomy
+      description: Returns an XHTML index of subject terms. Observed 200 on both hosts.
+      responses:
+        '200':
+          description: XHTML index of subjects.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
+  /rest/user/:
+    get:
+      tags:
+      - Repository
+      operationId: listUsers
+      summary: List the repository's user records
+      description: Returns an XHTML index of user record ids. Observed 200 on both hosts. Only ids are listed; the per-user documents behind them require authentication in the same way record XML does.
+      responses:
+        '200':
+          description: XHTML index of user record ids.
+          content:
+            text/html:
+              schema:
+                type: string
+                contentMediaType: text/html
